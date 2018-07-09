@@ -10,6 +10,8 @@ worm_cat_fun(file_to_process, title = "rgs", rm_dir = FALSE)
 \item{file_to_process}{the file to be processes}
 
 \item{title}{the title for your bubble plots}
+
+\item{rm_dir}{Boolean If FALSE do not remove temp dir. If TRUE remove temp dir}
 }
 \description{
 This function take a regulated gene set and the category annotations and runs a fisher test.
