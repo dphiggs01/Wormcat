@@ -4,12 +4,15 @@
 \alias{worm_cat_fun}
 \title{Worm Cat Function}
 \usage{
-worm_cat_fun(file_to_process, title = "rgs", rm_dir = FALSE)
+worm_cat_fun(file_to_process, title = "rgs", output_dir = NULL,
+  rm_dir = FALSE)
 }
 \arguments{
 \item{file_to_process}{the file to be processes}
 
 \item{title}{the title for your bubble plots}
+
+\item{output_dir}{the output directory}
 
 \item{rm_dir}{Boolean If FALSE do not remove temp dir. If TRUE remove temp dir}
 }

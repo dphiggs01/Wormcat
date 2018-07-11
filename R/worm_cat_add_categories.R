@@ -24,6 +24,7 @@
 
   # Save csv
   write.csv(Cat, file = paste(out_dir,"/rgs_and_categories.csv", sep=""))
+  write.csv(RGS, file = paste(out_dir,"/input_file.csv", sep=""))
 
 }
 
