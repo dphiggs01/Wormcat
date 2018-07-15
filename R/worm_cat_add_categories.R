@@ -14,7 +14,9 @@
   annotations_df <- annotations[!duplicated(annotations$Sequence.ID), ]
 
   # remove other columns
-  annotations_clean <- annotations_df[c(1,2,3,4,5,7)]
+  # DPH What is column 7 ???
+  # annotations_clean <- annotations_df[c(1,2,3,4,5,7)]
+  annotations_clean <- annotations_df[c(1,2,3,4,5)]
 
   # merge.x
   RGS_merge <-  merge(RGS_df, annotations_clean, by = "Sequence.ID", all.x = TRUE)

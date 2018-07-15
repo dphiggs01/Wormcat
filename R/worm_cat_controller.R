@@ -7,7 +7,7 @@
 
 #' Worm Cat Function
 #'
-#' This function take a regulated gene set and the category annotations and runs a fisher test.
+#' This function takes a regulated gene set and the category annotations and runs a fisher test.
 #' @param file_to_process the file to be processes
 #' @param title the title for your bubble plots
 #' @param output_dir the output directory
@@ -16,16 +16,22 @@
 #' @export
 #' @examples
 #' worm_cat_fun()
-worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE){
+worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_type="straight"){
     mainDir <- getwd()
+
     if(is.null(output_dir)){
       output_dir <- paste("worm-cat_",format(Sys.time(), "%b-%d-%Y-%H:%M:%S"), sep="")
     }
     output_dirPath <- paste("./",output_dir, sep="")
     dir.create(file.path(mainDir, output_dir))
 
-    #worm_cat_annotations <- "annotations_jul-09-2018.csv"
-    worm_cat_annotations <- system.file("extdata", "annotations_jul-09-2018.csv", package="wormcat")
+    if(annotation_type == "straight"){
+      worm_cat_annotations <- "annotations_jul-09-2018.csv"
+    }else{
+      worm_cat_annotations <- "annotations_jul-15-2018.csv"
+    }
+    print(paste("worm_cat_annotations=",worm_cat_annotations, sep=""))
+    worm_cat_annotations <- system.file("extdata", worm_cat_annotations, package="wormcat")
 
     .worm_cat_add_categories(file_to_process, output_dirPath, worm_cat_annotations)
 
