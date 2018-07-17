@@ -5,7 +5,8 @@
 \title{Worm Cat Function}
 \usage{
 worm_cat_fun(file_to_process, title = "rgs", output_dir = NULL,
-  rm_dir = FALSE, annotation_type = "straight")
+  rm_dir = FALSE, annotation_type = "straight",
+  input_type = "Sequence ID")
 }
 \arguments{
 \item{file_to_process}{the file to be processes}
@@ -15,6 +16,10 @@ worm_cat_fun(file_to_process, title = "rgs", output_dir = NULL,
 \item{output_dir}{the output directory}
 
 \item{rm_dir}{Boolean If FALSE do not remove temp dir. If TRUE remove temp dir}
+
+\item{annotation_type}{'straight' or 'physiology' the default is straight}
+
+\item{input_type}{'Sequence ID' or 'Wormbase ID' the default is Sequence ID}
 }
 \description{
 This function takes a regulated gene set and the category annotations and runs a fisher test.

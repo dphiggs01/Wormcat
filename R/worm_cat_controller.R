@@ -12,11 +12,13 @@
 #' @param title the title for your bubble plots
 #' @param output_dir the output directory
 #' @param rm_dir Boolean If FALSE do not remove temp dir. If TRUE remove temp dir
+#' @param annotation_type 'straight' or 'physiology' the default is straight
+#' @param input_type 'Sequence ID' or 'Wormbase ID' the default is Sequence ID
 #' @keywords worm cat
 #' @export
 #' @examples
 #' worm_cat_fun()
-worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_type="straight"){
+worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_type="straight", input_type="Sequence.ID"){
     mainDir <- getwd()
 
     if(is.null(output_dir)){
@@ -33,7 +35,7 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     print(paste("worm_cat_annotations=",worm_cat_annotations, sep=""))
     worm_cat_annotations <- system.file("extdata", worm_cat_annotations, package="wormcat")
 
-    .worm_cat_add_categories(file_to_process, output_dirPath, worm_cat_annotations)
+    .worm_cat_add_categories(file_to_process, output_dirPath, worm_cat_annotations, input_type)
 
     .worm_cat_fisher_test(output_dirPath, worm_cat_annotations)
 
