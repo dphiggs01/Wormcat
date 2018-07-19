@@ -28,9 +28,9 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     dir.create(file.path(mainDir, output_dir))
 
     if(annotation_type == "straight"){
-      worm_cat_annotations <- "annotations_jul-09-2018.csv"
-    }else{
       worm_cat_annotations <- "annotations_jul-15-2018.csv"
+    }else{
+      worm_cat_annotations <- "annotations_jul-18-2018.csv"
     }
     print(paste("worm_cat_annotations=",worm_cat_annotations, sep=""))
     worm_cat_annotations <- system.file("extdata", worm_cat_annotations, package="wormcat")

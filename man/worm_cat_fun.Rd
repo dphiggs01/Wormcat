@@ -6,7 +6,7 @@
 \usage{
 worm_cat_fun(file_to_process, title = "rgs", output_dir = NULL,
   rm_dir = FALSE, annotation_type = "straight",
-  input_type = "Sequence ID")
+  input_type = "Sequence.ID")
 }
 \arguments{
 \item{file_to_process}{the file to be processes}
