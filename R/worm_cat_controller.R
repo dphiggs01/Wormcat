@@ -56,6 +56,7 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
       .worm_cat_bubble_plot(cat_pvalue_file_to_process, plot_titles[i])
     }
 
+
     files2zip <- dir(output_dirPath, full.names = TRUE)
     zip(zipfile = output_dir, files = files2zip)
     if(rm_dir == TRUE){

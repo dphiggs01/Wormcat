@@ -109,7 +109,8 @@ library("plyr")
     df[nrow(df) + 1,] = list(Category=fact_character[i],RGS=cat_b$RGS[i], AC=cat_b$AC[i],pvalue)
   }
 
-  write.csv(df, file = file_nm)
+  sorted_df <- df[with(df, order(PValue)),]
+  write.csv(sorted_df, file = file_nm)
 }
 
 .out_file_nm <- function(output_dir,n){

@@ -19,6 +19,10 @@ library(pander)
 
   bubbles <- na.omit(bubbles)
 
+  bubbles <- rbind(bubbles, data.frame(Category = "calibration high", RGS = 250, AC = 0, PValue = 1.00E-50))
+  bubbles <- rbind(bubbles, data.frame(Category = "calibration low", RGS = 1, AC = 0, PValue = 1))
+
+
   bubbles$bubbles_z <- round(0.001 * (bubbles$PValue - mean(bubbles$PValue))/sd(bubbles$PValue), 2)  # compute normalized value as a placeholder
 
   bubbles$p_value_type <- ifelse(bubbles$PValue < 1e-40, "Col1",
