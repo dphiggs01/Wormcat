@@ -32,9 +32,10 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     }else{
       worm_cat_annotations <- "annotations_jul-18-2018.csv"
     }
-    print(paste("worm_cat_annotations=",worm_cat_annotations, sep=""))
+
     worm_cat_annotations <- system.file("extdata", worm_cat_annotations, package="wormcat")
 
+    # Create the categories file
     .worm_cat_add_categories(file_to_process, output_dirPath, worm_cat_annotations, input_type)
 
     .worm_cat_fisher_test(output_dirPath, worm_cat_annotations)

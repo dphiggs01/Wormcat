@@ -14,20 +14,21 @@
   annotations_df <- annotations[!duplicated(annotations$Sequence.ID), ]
 
   # remove other columns
-  annotations_clean <- annotations_df[c(1,2,3,4,5)]
+  annotations_clean <- annotations_df[c(1,2,3,4,5,6)]
 
   # merge.x
   print(paste("merge(######## RGS_df, annotations_clean=",input_type, sep=""))
   RGS_merge <-  merge(RGS_df, annotations_clean, by = input_type, all.x = TRUE)
 
   # create Cat1, Cat2, Cat3 files
-  Cat <- RGS_merge[c(3,4,5)]
+  Cat <- RGS_merge[c(1,2,3,4,5,6)]
 
   Worm_ID <- RGS_merge[c(2)]
   # Save csv
   write.csv(Cat, file = paste(out_dir,"/rgs_and_categories.csv", sep=""))
-  write.csv(RGS, file = paste(out_dir,"/input_file.csv", sep=""), row.names=FALSE)
-  write.csv(Worm_ID, file = paste(out_dir,"/input2_file.csv", sep=""), row.names=FALSE, na="")
+
+  #write.csv(RGS, file = paste(out_dir,"/input_file.csv", sep=""), row.names=FALSE)
+  #write.csv(Worm_ID, file = paste(out_dir,"/input2_file.csv", sep=""), row.names=FALSE, na="")
   # return(c(nrow(Cat),nrow(RGS),nrow(RGS_df)))
 }
 
