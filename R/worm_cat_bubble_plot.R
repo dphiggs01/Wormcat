@@ -3,6 +3,7 @@ library(plotflow)
 library(scales)
 library(ggthemes)
 library(pander)
+library(svglite)
 
 #RGS-Regulated Gene Sets
 
@@ -69,7 +70,7 @@ library(pander)
 
   s_from <- 0
   s_to <- nchar(csv_file_name)-4
-  file_out_name <- sprintf("%s.png",substr(csv_file_name, s_from, s_to))
+  file_out_name <- sprintf("%s.svg",substr(csv_file_name, s_from, s_to))
 
   #ggsave(file_out_name, width = 5.5, height = 5, useDingbats=F)
   ggsave(file_out_name, width = 5.5, height = 5)
