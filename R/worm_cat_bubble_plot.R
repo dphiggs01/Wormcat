@@ -20,18 +20,18 @@ library(svglite)
 
   bubbles <- na.omit(bubbles)
 
-  bubbles <- rbind(bubbles, data.frame(Category = "calibration high", RGS = 250, AC = 0, PValue = 1.00E-50))
-  bubbles <- rbind(bubbles, data.frame(Category = "calibration low", RGS = 1, AC = 0, PValue = 1))
+  bubbles <- rbind(bubbles, data.frame(Category = "calibration high", RGS = 250, AC = 0, PValue = 1.00E-50, Bonferroni = 1.00E-50))
+  bubbles <- rbind(bubbles, data.frame(Category = "calibration low", RGS = 1, AC = 0, PValue = 1, Bonferroni = 1))
 
 
   bubbles$bubbles_z <- round(0.001 * (bubbles$PValue - mean(bubbles$PValue))/sd(bubbles$PValue), 2)  # compute normalized value as a placeholder
 
-  bubbles$p_value_type <- ifelse(bubbles$PValue < 1e-40, "Col1",
-                                 ifelse(bubbles$PValue < 1e-20, "Col2",
-                                        ifelse(bubbles$PValue < 1e-10, "Col3",
-                                               ifelse(bubbles$PValue < 1e-5, "Col4",
-                                                      ifelse(bubbles$PValue < 1e-2, "Col5",
-                                                             ifelse(bubbles$PValue < 5e-2, "Col6","NS"))))))
+  bubbles$p_value_type <- ifelse(bubbles$Bonferroni < 1e-40, "Col1",
+                                 ifelse(bubbles$Bonferroni < 1e-20, "Col2",
+                                        ifelse(bubbles$Bonferroni < 1e-10, "Col3",
+                                               ifelse(bubbles$Bonferroni < 1e-5, "Col4",
+                                                      ifelse(bubbles$Bonferroni < 1e-2, "Col5",
+                                                             ifelse(bubbles$Bonferroni < 5e-2, "Col6","NS"))))))
 
 
   bubbles$RGS_size <- ifelse(bubbles$RGS > 150, "Size1",
