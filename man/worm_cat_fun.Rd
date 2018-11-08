@@ -5,7 +5,7 @@
 \title{Worm Cat Function}
 \usage{
 worm_cat_fun(file_to_process, title = "rgs", output_dir = NULL,
-  rm_dir = FALSE, annotation_type = "straight",
+  rm_dir = FALSE, annotation_file = "physiology_jul-15-2018.csv",
   input_type = "Sequence.ID")
 }
 \arguments{
@@ -17,7 +17,7 @@ worm_cat_fun(file_to_process, title = "rgs", output_dir = NULL,
 
 \item{rm_dir}{Boolean If FALSE do not remove temp dir. If TRUE remove temp dir}
 
-\item{annotation_type}{'straight' or 'physiology' the default is straight}
+\item{annotation_file}{'straight_mmm-DD-YYYY.csv' or 'physiology_mmm-DD-YYYY.csv' the default is straight}
 
 \item{input_type}{'Sequence ID' or 'Wormbase ID' the default is Sequence ID}
 }

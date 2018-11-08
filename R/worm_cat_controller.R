@@ -12,13 +12,13 @@
 #' @param title the title for your bubble plots
 #' @param output_dir the output directory
 #' @param rm_dir Boolean If FALSE do not remove temp dir. If TRUE remove temp dir
-#' @param annotation_type 'straight' or 'physiology' the default is straight
+#' @param annotation_file 'straight_mmm-DD-YYYY.csv' or 'physiology_mmm-DD-YYYY.csv' the default is straight
 #' @param input_type 'Sequence ID' or 'Wormbase ID' the default is Sequence ID
 #' @keywords worm cat
 #' @export
 #' @examples
 #' worm_cat_fun()
-worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_type="straight", input_type="Sequence.ID"){
+worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="physiology_jul-15-2018.csv", input_type="Sequence.ID"){
     mainDir <- getwd()
 
     if(is.null(output_dir)){
@@ -27,13 +27,7 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     output_dirPath <- paste("./",output_dir, sep="")
     dir.create(file.path(mainDir, output_dir))
 
-    if(annotation_type == "straight"){
-      worm_cat_annotations <- "annotations_jul-15-2018.csv"
-    }else{
-      worm_cat_annotations <- "annotations_jul-18-2018.csv"
-    }
-
-    worm_cat_annotations <- system.file("extdata", worm_cat_annotations, package="wormcat")
+    worm_cat_annotations <- system.file("extdata", annotation_file, package="wormcat")
 
     # Create the categories file
     .worm_cat_add_categories(file_to_process, output_dirPath, worm_cat_annotations, input_type)
@@ -56,6 +50,14 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
                        paste(title, "category3", sep=":"))
       .worm_cat_bubble_plot(cat_pvalue_file_to_process, plot_titles[i])
     }
+
+    #Capture what version of the Annotation file we ran against
+    run_data <- sprintf("./%s/run_data.txt", output_dir, i)
+    runtime_l <- paste("runtime",format(Sys.time(), "%b-%d-%Y-%H:%M:%S"), sep=":")
+    annotation_file_l <- paste("annotation_version",annotation_file, sep=":")
+    input_type_l <- paste("input_type",input_type, sep=":")
+
+    cat(runtime_l,annotation_file_l,input_type_l,file=run_data,sep="\n",append=TRUE)
 
 
     files2zip <- dir(output_dirPath, full.names = TRUE)
