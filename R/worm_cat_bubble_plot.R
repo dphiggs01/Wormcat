@@ -72,7 +72,10 @@ library(svglite)
     coord_flip()
 
 
-  myplot + theme(panel.grid = element_blank(), panel.background = element_blank(), legend.key = element_rect(fill = "white", colour = "white"))
+  myplot + theme(panel.grid = element_blank(),
+                 panel.background = element_blank(),
+                 legend.key = element_rect(fill = "white", colour = "white"),
+                 text=element_text(family="Arial", size=14))
 
   s_from <- 0
   s_to <- nchar(csv_file_name)-4
