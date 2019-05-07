@@ -34,7 +34,7 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
 
     .worm_cat_fisher_test(output_dirPath, worm_cat_annotations)
 
-    # For each of the three files made above:
+    # For each of the three files created above:
     # 1. Parse the file to only include the entries with "acceptable pvalues"
     # 2. Create bubble plots for each of the three categories based on the accepteble pvlaues
     for(i in 1:3) {

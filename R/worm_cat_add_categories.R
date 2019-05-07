@@ -10,7 +10,6 @@
   RGS_df <- data.frame(unique(RGS))
 
   #Remove dupliplicates from annotations
-  #annotations_df <- data.frame(unique(annotations$Sequence.ID))
   annotations_df <- annotations[!duplicated(annotations$Sequence.ID), ]
 
   # remove other columns
@@ -27,8 +26,5 @@
   # Save csv
   write.csv(Cat, file = paste(out_dir,"/rgs_and_categories.csv", sep=""))
 
-  #write.csv(RGS, file = paste(out_dir,"/input_file.csv", sep=""), row.names=FALSE)
-  #write.csv(Worm_ID, file = paste(out_dir,"/input2_file.csv", sep=""), row.names=FALSE, na="")
-  # return(c(nrow(Cat),nrow(RGS),nrow(RGS_df)))
 }
 

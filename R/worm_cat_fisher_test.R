@@ -21,10 +21,6 @@ library("plyr")
 
   total_nrow <- rename(total_count, c("nrow.AC." = "nrow"))
 
-  #print(total_nrow)
-  #print(total_nrow$nrow)
-  #print(total_annotated)
-
   total_annotated_cat1 <- data.frame(table(AC$Category.1))
 
   total_annotated_cat2 <- data.frame(table(AC$Category.2))
@@ -35,12 +31,7 @@ library("plyr")
 
   RGS_count <- data.frame(nrow(RGS))
 
-  #print(RGS_count)
-
   RGS_nrow <- rename(RGS_count, c("nrow.RGS." = "nrow"))
-
-  #print(RGS_nrow)
-  #print(RGS_nrow$nrow)
 
   RGS_annotated_cat1 <- data.frame(table(RGS$Category.1))
 
@@ -58,8 +49,6 @@ library("plyr")
 .merger_cats <- function(UP_annotated_cat, total_annotated_cat,total_all_cat, total_rgs_cat, file_nm) {
 
   cat_a <- merge(UP_annotated_cat, total_annotated_cat, by = "Var1", all.x = TRUE)
-
-  #print(head(cat_a))
 
   cat_b <- rename(cat_a, c("Var1" = "Category", "Freq.x" = "RGS", "Freq.y" = "AC" ))
 
@@ -85,16 +74,6 @@ library("plyr")
   fact_character <- levels(cat_b$Category)[as.numeric(cat_b$Category)]
 
   for(i in 1:nrow(cat_b)) {
-    #a <- cat_b$Category[i]
-    #print("xxxxxxxxxxx")
-    #print(RGS_nrow$nrow)
-    #print(total_nrow$nrow)
-    #print(cat_b$Category[i])
-    #print(total_rgs_cat)
-    #print(total_all_cat)
-    #print(fact_character[i])
-    #print(cat_b$RGS[i])
-    #print(cat_b$AC[i])
     if(is.na(cat_b$RGS[i]) | is.na(cat_b$AC[i])){
       pvalue <- NA
     }else{
@@ -102,9 +81,6 @@ library("plyr")
                                    cat_b$AC[i],total_all_cat),nrow=2,ncol=2),alternative="greater")
       pvalue <- stat$p.value
     }
-    #print(pvalue)
-    #print(fact_character[i])
-    #print("xxxxxxxxxxx")
 
     df[nrow(df) + 1,] = list(Category=fact_character[i],RGS=cat_b$RGS[i], AC=cat_b$AC[i],pvalue)
   }
