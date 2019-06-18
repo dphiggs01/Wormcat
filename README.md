@@ -9,6 +9,7 @@ The emergence of large sets of gene regulation data has revealed the need for im
 ```
     install.packages("devtools")
     library("devtools")
+    install_github("trinker/plotflow")
     devtools::install_github("dphiggs01/wormcat")
     library(wormcat)
 ```

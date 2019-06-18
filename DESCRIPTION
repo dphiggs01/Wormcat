@@ -5,7 +5,7 @@ Authors@R: c( person("Dan", "Higgins", email = "daniel.higgins@gatech,edu", role
               person("Amy", "Walker", email = "amy.walker@umassmed.edu"))
 Maintainer: Dan Higgins <daniel.higgins@gatech.edu>
 Description: This package maps a C. elegans gene set to annotated categories returning significant categories as a csv file and bubble chart.
-Depends: R (>= 3.4.1), datasets, graphics, grDevices, methods, stats, utils, ggplot2, plotflow, scales, ggthemes, pander, data.table, plyr, gdtools, svglite, FSA
+Depends: R (>= 3.4.1), datasets, graphics, grDevices, methods, stats, utils, ggplot2, scales, ggthemes, pander, data.table, plyr, gdtools, svglite, FSA
 License: MIT
 Encoding: UTF-8
 LazyData: true
