@@ -6,11 +6,28 @@
 The emergence of large sets of gene regulation data has revealed the need for improved tools to 1) identify enriched functional gene categories and 2) visualize enrichment patterns across comparative datasets.  Gene ontogeny enrichment (GO) has several limitations for C. elegans analysis. First, around 30% of C. elegans genes are not represented in commonly used search engines. Second, it is difficult to compare multiple GO analyses. To allow visualization and categorization of C. elegans gene sets, we have developed a web-based tool, WormCat.  This tool uses a near complete annotation of C. elegans genes to determine category enrichment and define potential co-regulated or co-functioning gene sets. Then WormCat provides a scaled heat map for visualization along with enrichment statistics and annotation of each input gene. We have developed an annotation strategy based on a nested category approach where each gene is annotated at three levels.  Enrichment scores are generated at each level, allowing both broad (Cat1) and more detailed analysis (Cat2, Cat3).  Using WormCat on published RNA seq datasets from metabolic, tissue-specific or after treatment with lifespan-increasing drugs, we show that WormCat finds major categories appearing in GO searches and also identifies additional enriched categories that are informative for interpreting phenotypes or predicting biological function.  Thus, WormCat is a powerful tool that will allow a sophisticated analysis of gene enrichment in different types of C. elegans datasets.
 
 ## Installing wormcat package
+
+* Wormcat requires **R 3.4.1** or greater and can be downloaded from [here](https://www.r-project.org/)
+
+* **devtools** package is also required for installation of Wormcat. You can install devtools package from RStudio or the R commandline with the following command. `install.packages("devtools")`
+
+* Next load the **devtools** library with `library("devtools")`
+
+* Install the **plotflow** dependency with `install_github("trinker/plotflow")`
+
+* Install **wormcat** with `install_github(“dphiggs01/wormcat")`  
+
+* If you are using **wormcat-compiler** you will also need **argparse** which can be installed with `install.packages(“argparse")`
+
+
+Condensed instructions:
+
 ```
     install.packages("devtools")
     library("devtools")
     install_github("trinker/plotflow")
-    devtools::install_github("dphiggs01/wormcat")
+    install_github("dphiggs01/wormcat")
+    install.packages(“argparse")
     library(wormcat)
 ```
 
