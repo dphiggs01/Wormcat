@@ -17,7 +17,7 @@ The emergence of large sets of gene regulation data has revealed the need for im
 
 * Install **wormcat** with `install_github(“dphiggs01/wormcat")`  
 
-* If you are using **wormcat-compiler** you will also need **argparse** which can be installed with `install.packages(“argparse")`
+* If you are using **wormcat-batch** you will also need **argparse** which can be installed with `install.packages(“argparse")`
 
 
 Condensed instructions:
@@ -27,7 +27,11 @@ Condensed instructions:
     library("devtools")
     install_github("trinker/plotflow")
     install_github("dphiggs01/wormcat")
-    install.packages(“argparse")
+    install.packages("argparse")
     library(wormcat)
 ```
+
+
+Note: for Ubuntu source code install 
+sudo apt-get install libxml2-dev, libssl-dev, libcurl4-openssl-dev, libfontconfig1-dev, libcairo2-dev
 
