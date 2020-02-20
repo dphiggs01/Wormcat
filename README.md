@@ -7,7 +7,7 @@ The emergence of large sets of gene regulation data has revealed the need for im
 
 ## Installing wormcat package
 
-* Wormcat requires **R 3.4.1** or greater and can be downloaded from [here](https://www.r-project.org/)
+* Wormcat requires **R 3.5.1** or greater and can be downloaded from [here](https://www.r-project.org/)
 
 * **devtools** package is also required for installation of Wormcat. You can install devtools package from RStudio or the R commandline with the following command. `install.packages("devtools")`
 
@@ -32,6 +32,10 @@ Condensed instructions:
 ```
 
 
-Note: for Ubuntu source code install 
-sudo apt-get install libxml2-dev, libssl-dev, libcurl4-openssl-dev, libfontconfig1-dev, libcairo2-dev
+Note: for (Linux) Ubuntu source code install 
+
+* `sudo apt-get install libxml2-dev libssl-dev libcurl4-openssl-dev libfontconfig1-dev libcairo2-dev`
+
+* Follow this link to [upgrade R on Ubuntu 18.0.4](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-18-04-quickstart).
+
 
