@@ -17,7 +17,7 @@
 #' @param zip_files Boolean If TRUE will create a zipped archive of the results
 #' @keywords worm cat
 #' @export
-worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file=NULL, input_type="Sequence.ID",
+worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="whole_genome_jul-03-2019.csv", input_type="Sequence.ID",
                         zip_files=TRUE){
     mainDir <- getwd()
 
@@ -30,10 +30,8 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
         dir.create(file.path(mainDir, output_dir))
     }
 
-    if(is.null(annotation_file)){
-        annotation_file="whole_genome_jul-03-2019.csv"
-        worm_cat_annotations <- system.file("extdata", annotation_file, package="wormcat")
-    } else {
+    worm_cat_annotations <- system.file("extdata", annotation_file, package="wormcat")
+    if(!file.exists(worm_cat_annotations)){
         worm_cat_annotations <- annotation_file
     }
 
