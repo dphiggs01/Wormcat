@@ -4,9 +4,15 @@
 \alias{worm_cat_fun}
 \title{Worm Cat Function}
 \usage{
-worm_cat_fun(file_to_process, title = "rgs", output_dir = NULL,
-  rm_dir = FALSE, annotation_file = "physiology_jul-15-2018.csv",
-  input_type = "Sequence.ID")
+worm_cat_fun(
+  file_to_process,
+  title = "rgs",
+  output_dir = NULL,
+  rm_dir = FALSE,
+  annotation_file = NULL,
+  input_type = "Sequence.ID",
+  zip_files = TRUE
+)
 }
 \arguments{
 \item{file_to_process}{the file to be processes}
@@ -19,13 +25,12 @@ worm_cat_fun(file_to_process, title = "rgs", output_dir = NULL,
 
 \item{annotation_file}{'straight_mmm-DD-YYYY.csv' or 'physiology_mmm-DD-YYYY.csv' the default is straight}
 
-\item{input_type}{'Sequence ID' or 'Wormbase ID' the default is Sequence ID}
+\item{input_type}{'Sequence.ID' or 'Wormbase.ID' the default is Sequence.ID}
+
+\item{zip_files}{Boolean If TRUE will create a zipped archive of the results}
 }
 \description{
 This function takes a regulated gene set and the category annotations and runs a fisher test.
-}
-\examples{
-worm_cat_fun()
 }
 \keyword{cat}
 \keyword{worm}
