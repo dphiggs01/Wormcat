@@ -9,7 +9,7 @@ worm_cat_fun(
   title = "rgs",
   output_dir = NULL,
   rm_dir = FALSE,
-  annotation_file = NULL,
+  annotation_file = "whole_genome_jul-03-2019.csv",
   input_type = "Sequence.ID",
   zip_files = TRUE
 )

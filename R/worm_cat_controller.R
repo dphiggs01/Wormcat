@@ -17,8 +17,7 @@
 #' @param zip_files Boolean If TRUE will create a zipped archive of the results
 #' @keywords worm cat
 #' @export
-worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="whole_genome_jul-03-2019.csv", input_type="Sequence.ID",
-                        zip_files=TRUE){
+worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="whole_genome_jul-03-2019.csv", input_type="Sequence.ID", zip_files=TRUE){
     mainDir <- getwd()
 
     if(is.null(output_dir)){
