@@ -13,21 +13,26 @@
 #' @param output_dir the output directory
 #' @param rm_dir Boolean If FALSE do not remove temp dir. If TRUE remove temp dir
 #' @param annotation_file 'straight_mmm-DD-YYYY.csv' or 'physiology_mmm-DD-YYYY.csv' the default is straight
-#' @param input_type 'Sequence ID' or 'Wormbase ID' the default is Sequence ID
+#' @param input_type 'Sequence.ID' or 'Wormbase.ID' the default is Sequence.ID
+#' @param zip_files Boolean If TRUE will create a zipped archive of the results
 #' @keywords worm cat
 #' @export
-#' @examples
-#' worm_cat_fun()
-worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="physiology_jul-15-2018.csv", input_type="Sequence.ID"){
+worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="whole_genome_jul-03-2019.csv", input_type="Sequence.ID", zip_files=TRUE){
     mainDir <- getwd()
 
     if(is.null(output_dir)){
       output_dir <- paste("worm-cat_",format(Sys.time(), "%b-%d-%Y-%H:%M:%S"), sep="")
     }
     output_dirPath <- paste("./",output_dir, sep="")
-    dir.create(file.path(mainDir, output_dir))
+
+    if(!dir.exists(output_dir)){
+        dir.create(file.path(mainDir, output_dir))
+    }
 
     worm_cat_annotations <- system.file("extdata", annotation_file, package="wormcat")
+    if(!file.exists(worm_cat_annotations)){
+        worm_cat_annotations <- annotation_file
+    }
 
     # Create the categories file
     .worm_cat_add_categories(file_to_process, output_dirPath, worm_cat_annotations, input_type)
@@ -59,9 +64,10 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
 
     cat(runtime_l,annotation_file_l,input_type_l,file=run_data,sep="\n",append=TRUE)
 
-
-    files2zip <- dir(output_dirPath, full.names = TRUE)
-    zip(zipfile = output_dir, files = files2zip)
+    if(zip_files){
+        files2zip <- dir(output_dirPath, full.names = TRUE)
+        zip(zipfile = output_dir, files = files2zip)
+    }
     if(rm_dir == TRUE){
       print("cleaning up")
        unlink(output_dir, TRUE)

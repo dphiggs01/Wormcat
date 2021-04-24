@@ -19,7 +19,7 @@ library("plyr")
 
   total_count <- data.frame(nrow(AC))
 
-  total_nrow <- rename(total_count, c("nrow.AC." = "nrow"))
+  total_nrow <- plyr::rename(total_count, c("nrow.AC." = "nrow"))
 
   total_annotated_cat1 <- data.frame(table(AC$Category.1))
 
@@ -31,7 +31,7 @@ library("plyr")
 
   RGS_count <- data.frame(nrow(RGS))
 
-  RGS_nrow <- rename(RGS_count, c("nrow.RGS." = "nrow"))
+  RGS_nrow <- plyr::rename(RGS_count, c("nrow.RGS." = "nrow"))
 
   RGS_annotated_cat1 <- data.frame(table(RGS$Category.1))
 
@@ -50,7 +50,7 @@ library("plyr")
 
   cat_a <- merge(UP_annotated_cat, total_annotated_cat, by = "Var1", all.x = TRUE)
 
-  cat_b <- rename(cat_a, c("Var1" = "Category", "Freq.x" = "RGS", "Freq.y" = "AC" ))
+  cat_b <- plyr::rename(cat_a, c("Var1" = "Category", "Freq.x" = "RGS", "Freq.y" = "AC" ))
 
   # Step 5: Build contengency table for each category in RGS vs AC
 
