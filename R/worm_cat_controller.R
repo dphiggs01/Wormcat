@@ -39,11 +39,11 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     # 2. Create bubble plots for each of the three categories based on the accepteble pvlaues
     for(i in 1:3) {
 
-      cat_file_to_process <- sprintf("./%s/rgs_fisher_cat%d.csv", output_dir, i)
+      cat_file_to_process <- sprintf("./%s/rgs_fisher_cat%d.csv", output_dir)
       print(sprintf("Processed %s",cat_file_to_process))
       .worm_cat_acceptable_pvalues(cat_file_to_process)
 
-      cat_pvalue_file_to_process <- sprintf("./%s/rgs_fisher_cat%d_apv.csv",output_dir, i)
+      cat_pvalue_file_to_process <- sprintf("./%s/rgs_fisher_cat%d_apv.csv",output_dir)
 
       plot_titles <- c(paste(title, "category1", sep=":"),
                        paste(title, "category2", sep=":"),
