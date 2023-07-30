@@ -10,7 +10,7 @@
   RGS_df <- data.frame(unique(RGS))
 
   #Remove dupliplicates from annotations
-  annotations_df <- annotations[!duplicated(annotations$Sequence.ID), ]
+  annotations_df <- annotations[!duplicated(annotations[,input_type]), ]
 
   # remove other columns
   annotations_clean <- annotations_df[c(1,2,3,4,5,6)]
