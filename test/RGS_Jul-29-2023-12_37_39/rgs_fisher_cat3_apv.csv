@@ -1,0 +1,11 @@
+"Category","RGS","AC","PValue","Bonferroni"
+"Stress response: pathogen: unassigned",30,96,4.26029392670679e-21,6.98688203979914e-19
+"Proteolysis proteasome: E3: F box",37,437,1.15677866423555e-09,1.8971170093463e-07
+"Unassigned: regulated by multiple stresses",86,1707,1.15135929125144e-08,1.88822923765236e-06
+"Transcription factor: NHR",22,259,2.06528889221412e-06,0.000338707378323116
+"Stress response: ER",7,24,7.61678139538679e-06,0.00124915214884343
+"Stress response: pathogen: CUB",7,25,9.54404290128138e-06,0.00156522303581015
+"Stress response: unassigned",9,49,1.03621186830759e-05,0.00169938746402445
+"Transmembrane transport: ABC",9,50,1.19627228894624e-05,0.00196188655387183
+"Stress response: detoxification: ugt",10,69,2.16557292913051e-05,0.00355153960377404
+"Stress response: signaling",4,4,2.19866743332363e-05,0.00360581459065075

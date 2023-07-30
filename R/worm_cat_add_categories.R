@@ -1,30 +1,27 @@
-## apply category 3 to regulated gene set then split categories
+# Merge the annotation file with the file to process
 
-.worm_cat_add_categories <- function(csv_fnm, out_dir, worm_cat_annotations, input_type="Sequence.ID"){
+.worm_cat_add_categories <- function(file_to_process, out_dir, worm_cat_annotations, input_type="Sequence.ID"){
 
-  RGS  <- read.csv(csv_fnm, header=TRUE, sep =",")
+    # Read in the file to process
+    file_to_process  <- read.csv(file_to_process, header=TRUE, sep =",")
 
-  annotations  <- read.csv(worm_cat_annotations, header=TRUE, sep =",")
+    # Read in the annotation file
+    annotations  <- read.csv(worm_cat_annotations, header=TRUE, sep =",")
 
-  #Remove dupliplicates from RGS
-  RGS_df <- data.frame(unique(RGS))
+    # Remove duplicates from file_to_process
+    file_to_process_df <- data.frame(unique(file_to_process))
 
-  #Remove dupliplicates from annotations
-  annotations_df <- annotations[!duplicated(annotations$Sequence.ID), ]
+    # Remove duplicates from annotations (there really should not be any)
+    annotations_df <- annotations[!duplicated(annotations$Sequence.ID), ]
 
-  # remove other columns
-  annotations_clean <- annotations_df[c(1,2,3,4,5,6)]
+    # Remove other columns from annotations (there really should not be any)
+    annotations_df <- annotations_df[c(1,2,3,4,5,6)]
 
-  # merge.x
-  print(paste("merge(######## RGS_df, annotations_clean=",input_type, sep=""))
-  RGS_merge <-  merge(RGS_df, annotations_clean, by = input_type, all.x = TRUE)
+    # Combine the file_to_process with the annotation file
+    rgs_merge <-  merge(file_to_process_df, annotations_df, by = input_type, all.x = TRUE)
 
-  # create Cat1, Cat2, Cat3 files
-  Cat <- RGS_merge[c(1,2,3,4,5,6)]
-
-  Worm_ID <- RGS_merge[c(2)]
-  # Save csv
-  write.csv(Cat, file = paste(out_dir,"/rgs_and_categories.csv", sep=""))
+    # Save merged data as CSV file
+    write.csv(rgs_merge, file = paste(out_dir,"/rgs_and_categories.csv", sep=""))
 
 }
 

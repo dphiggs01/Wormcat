@@ -1,9 +1,7 @@
 library(ggplot2)
-library(plotflow)
-library(scales)
 library(ggthemes)
-library(pander)
-library(svglite)
+library(plotflow)
+
 
 #RGS-Regulated Gene Sets
 
@@ -14,9 +12,9 @@ library(svglite)
 
 .worm_cat_bubble_plot <- function(csv_file_name, plot_title) {
 
-  dev.list()
+  #dev.list()
 
-  bubbles  <- read.csv(csv_file_name, header=TRUE, sep =",")
+  bubbles <- read.csv(csv_file_name, header=TRUE, sep =",")
 
   bubbles <- na.omit(bubbles)
 
@@ -69,27 +67,20 @@ library(svglite)
 
     labs(title=plot_title) +
     ylim(-1.0, 1.0) +
-    coord_flip()
-
-
-  myplot + theme(panel.grid = element_blank(),
+    coord_flip() +
+    theme(panel.grid = element_blank(),
                  panel.background = element_blank(),
                  legend.key = element_rect(fill = "white", colour = "white"),
                  text=element_text(family="Arial", size=14))
 
-#  myplot + theme(panel.grid = element_blank(),
-#                   panel.background = element_blank(),
-#                   legend.key = element_rect(fill = "white", colour = "white")
-#                   )
-
   s_from <- 0
   s_to <- nchar(csv_file_name)-4
-  file_out_name <- sprintf("%s.svg",substr(csv_file_name, s_from, s_to))
+  file_out_name <- sprintf("%s1.svg",substr(csv_file_name, s_from, s_to))
+  ggsave(filename = file_out_name,
+         plot = myplot,
+         device = "svg",
+         width = 6, height = 5.5)
+  message(paste("Plot saved to:", file_out_name))
 
-  #ggsave(file_out_name, width = 5.5, height = 5, useDingbats=F)
-  ggsave(file_out_name, width = 6, height = 5.5)
 
-  print(myplot)
-
-  dev.off()
 }

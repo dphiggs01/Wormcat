@@ -4,25 +4,30 @@
 \alias{worm_cat_fun}
 \title{Worm Cat Function}
 \usage{
-worm_cat_fun(file_to_process, title = "rgs", output_dir = NULL,
-  rm_dir = FALSE, annotation_file = "physiology_jul-15-2018.csv",
-  input_type = "Sequence.ID")
+worm_cat_fun(
+  file_to_process = "g",
+  title = "rgs",
+  output_dir = NULL,
+  rm_dir = FALSE,
+  annotation_file = "physiology_jul-15-2018.csv",
+  input_type = "Sequence.ID"
+)
 }
 \arguments{
-\item{file_to_process}{the file to be processes}
+\item{file_to_process}{the file name to be processed (file should be in current working directory)}
 
 \item{title}{the title for your bubble plots}
 
-\item{output_dir}{the output directory}
+\item{output_dir}{the output directory (is a relative directory from the current working directory)}
 
-\item{rm_dir}{Boolean If FALSE do not remove temp dir. If TRUE remove temp dir}
+\item{rm_dir}{Boolean If FALSE do not remove temp dir. If TRUE remove temp directory}
 
 \item{annotation_file}{'straight_mmm-DD-YYYY.csv' or 'physiology_mmm-DD-YYYY.csv' the default is straight}
 
 \item{input_type}{'Sequence ID' or 'Wormbase ID' the default is Sequence ID}
 }
 \description{
-This function takes a regulated gene set and the category annotations and runs a fisher test.
+This function takes a regulated gene set and the category annotations and runs a Fisher test.
 }
 \examples{
 worm_cat_fun()
