@@ -75,7 +75,7 @@ library(plotflow)
 
   s_from <- 0
   s_to <- nchar(csv_file_name)-4
-  file_out_name <- sprintf("%s1.svg",substr(csv_file_name, s_from, s_to))
+  file_out_name <- sprintf("%s.svg",substr(csv_file_name, s_from, s_to))
   ggsave(filename = file_out_name,
          plot = myplot,
          device = "svg",

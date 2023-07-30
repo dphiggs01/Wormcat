@@ -5,12 +5,13 @@
 \title{Worm Cat Function}
 \usage{
 worm_cat_fun(
-  file_to_process = "g",
+  file_to_process,
   title = "rgs",
   output_dir = NULL,
   rm_dir = FALSE,
-  annotation_file = "physiology_jul-15-2018.csv",
-  input_type = "Sequence.ID"
+  annotation_file = "whole_genome_v2_nov-11-2021.csv",
+  input_type = "Sequence.ID",
+  zip_files = TRUE
 )
 }
 \arguments{
@@ -22,15 +23,14 @@ worm_cat_fun(
 
 \item{rm_dir}{Boolean If FALSE do not remove temp dir. If TRUE remove temp directory}
 
-\item{annotation_file}{'straight_mmm-DD-YYYY.csv' or 'physiology_mmm-DD-YYYY.csv' the default is straight}
+\item{annotation_file}{provide an internal annotation file name or a path to an external file}
 
-\item{input_type}{'Sequence ID' or 'Wormbase ID' the default is Sequence ID}
+\item{input_type}{'Sequence.ID' or 'Wormbase.ID' the default is Sequence ID}
 }
 \description{
-This function takes a regulated gene set and the category annotations and runs a Fisher test.
+This function takes a regulated gene set and a category annotations file and runs a Fisher test.
 }
 \examples{
 worm_cat_fun()
 }
-\keyword{cat}
-\keyword{worm}
+\keyword{wormcat}

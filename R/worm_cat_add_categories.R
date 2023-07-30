@@ -12,7 +12,7 @@
     file_to_process_df <- data.frame(unique(file_to_process))
 
     # Remove duplicates from annotations (there really should not be any)
-    annotations_df <- annotations[!duplicated(annotations$Sequence.ID), ]
+    annotations_df <- annotations[!duplicated(annotations[,input_type]), ]
 
     # Remove other columns from annotations (there really should not be any)
     annotations_df <- annotations_df[c(1,2,3,4,5,6)]

@@ -26,3 +26,12 @@ worm_cat_fun(file_to_process,
              annotation_file,
              input_type)
 
+
+# Test get_files_in_extdata
+#Test Worm CAT
+library(wormcat)
+
+annotation_files <- get_available_annotation_files()
+print(annotation_files)
+
+

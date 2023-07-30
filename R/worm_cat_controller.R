@@ -1,18 +1,18 @@
 
 #' Worm Cat Function
 #'
-#' This function takes a regulated gene set and the category annotations and runs a Fisher test.
+#' This function takes a regulated gene set and a category annotations file and runs a Fisher test.
 #' @param file_to_process the file name to be processed (file should be in current working directory)
 #' @param title the title for your bubble plots
 #' @param output_dir the output directory (is a relative directory from the current working directory)
 #' @param rm_dir Boolean If FALSE do not remove temp dir. If TRUE remove temp directory
-#' @param annotation_file 'straight_mmm-DD-YYYY.csv' or 'physiology_mmm-DD-YYYY.csv' the default is straight
-#' @param input_type 'Sequence ID' or 'Wormbase ID' the default is Sequence ID
-#' @keywords worm cat
+#' @param annotation_file provide an internal annotation file name or a path to an external file
+#' @param input_type 'Sequence.ID' or 'Wormbase.ID' the default is Sequence ID
+#' @keywords wormcat
 #' @export
 #' @examples
 #' worm_cat_fun()
-worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="physiology_jul-15-2018.csv", input_type="Sequence.ID") {
+worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="whole_genome_v2_nov-11-2021.csv", input_type="Sequence.ID", zip_files=TRUE) {
 
     # Get the current working directory
     working_dir <- getwd()
@@ -24,8 +24,16 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
 
     dir.create(file.path(working_dir, output_dir))
 
-    # Get full path to annotations file
-    worm_cat_annotations <- system.file("extdata", annotation_file, package="wormcat")
+
+    # If annotation_file contains a file system specific seperator assume an external annotation file is being used
+    separator <- .get_system_path_separator()
+    if (grepl(separator, annotation_file)) {
+      worm_cat_annotations <- annotation_file
+      message(paste("Using external Annotation file: ", worm_cat_annotations))
+    }else{
+      # Get full path to annotations file
+      worm_cat_annotations <- system.file("extdata", annotation_file, package="wormcat")
+    }
 
     # Create the categories file and save it to CSV output
     .worm_cat_add_categories(file_to_process, output_dir, worm_cat_annotations, input_type)
@@ -57,15 +65,43 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     cat(runtime_l, annotation_file_l, input_type_l, file=run_data,sep="\n",append=TRUE)
 
     # Create a zip file as the final output
-    files2zip <- dir(output_dir, full.names = TRUE)
-    zip(zipfile = output_dir, files = files2zip)
-
+    if(zip_files) {
+       files2zip <- dir(output_dir, full.names = TRUE)
+       zip(zipfile = output_dir, files = files2zip)
+    }else{
+       message("Ignoring ZIP process")
+    }
     if(rm_dir == TRUE){
-      print("Cleaning up the working directory")
+       message("Cleaning up the working directory")
        unlink(output_dir, TRUE)
     }
 }
 
+.get_system_path_separator <- function() {
+  if (Sys.info()["sysname"] == "Windows") {
+    return("\\")
+  } else {
+    return("/")
+  }
+}
+
+
+#' This function returns a list of available annotation files.
+#' @keywords wormcat
+#' @export
+#' @examples
+#' get_available_annotation_files()
+get_available_annotation_files <- function() {
+
+  # Get the path to the "extdata" directory within the wormcat package
+  extdata_dir <- system.file("extdata", package = "wormcat")
+
+  # List all files in the "extdata" directory
+  files_in_extdata <- list.files(extdata_dir, full.names = TRUE)
+  annotation_files <- lapply(files_in_extdata, basename, )
+
+  return(annotation_files)
+}
 
 
 
