@@ -2,7 +2,8 @@
 library(wormcat)
 
 rm(list= ls())
-setwd("/Users/dan/Code/R_Workspace/Wormcat/test")
+#setwd("/Users/dan/Code/R_Workspace/Wormcat/test")
+setwd("~/projects/Code/R_Workspace/Wormcat/test")
 file_to_process <- "sams-1_up.csv"
 title <- "sams-1 up"
 output_dir <- "wormcat_out"
