@@ -1,17 +1,20 @@
 
 #' Worm Cat Function
 #'
-#' This function takes a regulated gene set and a category annotations file and runs a Fisher test.
-#' @param file_to_process the file name to be processed (file should be in current working directory)
-#' @param title the title for your bubble plots
-#' @param output_dir the output directory (is a relative directory from the current working directory)
-#' @param rm_dir Boolean If FALSE do not remove temp dir. If TRUE remove temp directory
-#' @param annotation_file provide an internal annotation file name or a path to an external file
-#' @param input_type 'Sequence.ID' or 'Wormbase.ID' the default is Sequence ID
-#' @keywords wormcat
+#'  worm_cat_fun uses a concise list of nested categories defined in the annotation_file
+#'  where each gene is first assigned to a category based on physiological function, and then to a molecular function or cellular location.
+#'  worm_cat_fun output provides a scaled bubble chart that allows the visualization and direct comparison of complex datasets.
+#'  The tool also provides csv files containing input gene annotations, P-values from Fisher’s exact tests, and Bonferroni multiple hypothesis testing corrections.
+#' @param file_to_process The file name to be processed (file should be in current working directory)
+#' @param title The title for your bubble plots
+#' @param output_dir The output directory (is a relative directory from the current working directory)
+#' @param rm_dir Remove the processing directory, the Default is TRUE. This assumes the zip_files is also TRUE. If rm_dir=TRUE and zip_files=FALSE noy output will be created.
+#' @param annotation_file Provide an internal annotation file name or a path to an external file
+#' @param input_type Identify the type of input data. 'Sequence.ID' or 'Wormbase.ID' the default is Sequence ID
+#' @param zip_files Create a zip file of the final content. The default is TRUE
 #' @export
 #' @examples
-#' worm_cat_fun()
+#' worm_cat_fun(file_to_process="/home/rstudio/examples/sams-1_up.csv",output_dir="./output",annotation_file=whole_genome_v2_nov-11-2021.csv,input_type="Wormbase.ID")
 worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="whole_genome_v2_nov-11-2021.csv", input_type="Sequence.ID", zip_files=TRUE) {
 
     # Get the current working directory
@@ -25,7 +28,7 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     dir.create(file.path(working_dir, output_dir))
 
 
-    # If annotation_file contains a file system specific seperator assume an external annotation file is being used
+    # If annotation_file contains a file system specific separator assume an external annotation file is being used
     separator <- .get_system_path_separator()
     if (grepl(separator, annotation_file)) {
       worm_cat_annotations <- annotation_file
@@ -42,8 +45,8 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     .worm_cat_fisher_test(output_dir, worm_cat_annotations)
 
     # For each of the three files created above:
-    # 1. Parse the file only to include the entries with "acceptable pvalues."
-    # 2. Create bubble plots for each of the three categories based on the acceptable pvlaues.
+    # 1. Parse the file only to include the entries with "acceptable p-values."
+    # 2. Create bubble plots for each of the three categories based on the acceptable p-vlaues.
     for(i in 1:3) {
 
       rgs_fisher_cat_csv <- sprintf("./%s/rgs_fisher_cat%d.csv", output_dir, i)
@@ -86,8 +89,9 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
 }
 
 
-#' This function returns a list of available annotation files.
-#' @keywords wormcat
+#' Worm Cat Function
+#'
+#' This function returns a list of available curated annotation file names for use with worm_cat_fun.
 #' @export
 #' @examples
 #' get_available_annotation_files()

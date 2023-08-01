@@ -1,15 +1,16 @@
-#Test Worm CAT
+#Test Wormcat
 library(wormcat)
 
 rm(list= ls())
-#setwd("/Users/dan/Code/R_Workspace/Wormcat/test")
-setwd("~/projects/Code/R_Workspace/Wormcat/test")
+setwd("/Users/dan/Code/R_Workspace/Wormcat/test")
+#setwd("~/projects/Code/R_Workspace/Wormcat/test")
 file_to_process <- "sams-1_up.csv"
 title <- "sams-1 up"
 output_dir <- "wormcat_out"
 rm_dir = FALSE
 annotation_file <-"whole_genome_v2_nov-11-2021.csv"
 input_type <- "Wormbase.ID"
+zip_files=FALSE
 
 delete_directory_if_exists <- function(directory_path) {
   if (dir.exists(directory_path)) {
@@ -25,9 +26,10 @@ worm_cat_fun(file_to_process,
              output_dir,
              rm_dir,
              annotation_file,
-             input_type)
+             input_type,
+             zip_files)
 
-
+###############################################################
 # Test get_files_in_extdata
 #Test Worm CAT
 library(wormcat)

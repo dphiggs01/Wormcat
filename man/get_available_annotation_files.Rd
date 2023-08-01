@@ -2,14 +2,13 @@
 % Please edit documentation in R/worm_cat_controller.R
 \name{get_available_annotation_files}
 \alias{get_available_annotation_files}
-\title{This function returns a list of available annotation files.}
+\title{Worm Cat Function}
 \usage{
 get_available_annotation_files()
 }
 \description{
-This function returns a list of available annotation files.
+This function returns a list of available curated annotation file names for use with worm_cat_fun.
 }
 \examples{
 get_available_annotation_files()
 }
-\keyword{wormcat}
