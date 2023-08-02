@@ -28,7 +28,7 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
       dir.create(file.path(working_dir, output_dir))
     } else if ((substring(output_dir, first = 1, last = 1)) == "~") {
       home_directory <- Sys.getenv("HOME")
-      dir.create(file.path(home_directory, output_dir))
+      dir.create(file.path(home_directory, substr(output_dir, start = 3)))
     } else {
       dir.create(output_dir)
     }
