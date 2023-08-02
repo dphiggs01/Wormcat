@@ -1,6 +1,6 @@
 # Merge the annotation file with the file to process
 
-.worm_cat_add_categories <- function(file_to_process, out_dir, worm_cat_annotations, input_type="Sequence.ID"){
+.worm_cat_add_categories <- function(file_to_process, out_dir, worm_cat_annotations, input_type){
 
     # Read in the file to process
     file_to_process  <- read.csv(file_to_process, header=TRUE, sep =",")

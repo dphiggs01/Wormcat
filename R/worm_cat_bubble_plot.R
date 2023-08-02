@@ -80,7 +80,7 @@ library(plotflow)
          plot = myplot,
          device = "svg",
          width = 6, height = 5.5)
-  message(paste("Plot saved to:", file_out_name))
+  #message(paste("Plot saved to:", file_out_name))
 
 
 }

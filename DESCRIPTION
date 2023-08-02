@@ -1,6 +1,6 @@
 Package: wormcat
 Title: Worm Gene Annotation Identifier
-Version: 0.0.1.9000
+Version: 1.0.9
 Authors@R: c( person("Dan", "Higgins", email = "daniel.higgins@gatech,edu", role = c("aut", "cre")),
               person("Amy", "Walker", email = "amy.walker@umassmed.edu"))
 Maintainer: Dan Higgins <daniel.higgins@gatech.edu>

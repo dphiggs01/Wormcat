@@ -15,19 +15,19 @@ worm_cat_fun(
 )
 }
 \arguments{
-\item{file_to_process}{The file name to be processed (file should be in current working directory)}
+\item{file_to_process}{The file name to the gene set to be processed.}
 
-\item{title}{The title for your bubble plots}
+\item{title}{The title for the bubble plots.}
 
-\item{output_dir}{The output directory (is a relative directory from the current working directory)}
+\item{output_dir}{The output directory (this is usually a relative directory from the current working directory).}
 
-\item{rm_dir}{Remove the processing directory, the Default is TRUE. This assumes the zip_files is also TRUE. If rm_dir=TRUE and zip_files=FALSE noy output will be created.}
+\item{rm_dir}{A flag to remove the processing directory, the Default is \code{TRUE}. This assumes the \code{zip_files} is also \code{TRUE} CAUTION: If \code{rm_dir=TRUE} and \code{zip_files=FALSE} no output will be created.}
 
-\item{annotation_file}{Provide an internal annotation file name or a path to an external file}
+\item{annotation_file}{An internal annotation file name or a path to an external annotation file.}
 
-\item{input_type}{Identify the type of input data. 'Sequence.ID' or 'Wormbase.ID' the default is Sequence ID}
+\item{input_type}{The type of input data. \code{'Sequence.ID'} or \code{'Wormbase.ID'} the default is \code{'Sequence.ID'}.}
 
-\item{zip_files}{Create a zip file of the final content. The default is TRUE}
+\item{zip_files}{A flag to create a zip file of the final content. The default is \code{TRUE}.}
 }
 \description{
 worm_cat_fun uses a concise list of nested categories defined in the annotation_file
@@ -36,5 +36,6 @@ worm_cat_fun uses a concise list of nested categories defined in the annotation_
  The tool also provides csv files containing input gene annotations, P-values from Fisher’s exact tests, and Bonferroni multiple hypothesis testing corrections.
 }
 \examples{
-worm_cat_fun(file_to_process="/home/rstudio/examples/sams-1_up.csv",output_dir="./output",annotation_file=whole_genome_v2_nov-11-2021.csv,input_type="Wormbase.ID")
+worm_cat_fun(file_to_process="/home/rstudio/examples/sams-1_up.csv",output_dir="./output",annotation_file="whole_genome_v2_nov-11-2021.csv",input_type="Wormbase.ID")
+
 }
