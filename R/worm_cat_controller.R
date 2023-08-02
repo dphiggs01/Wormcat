@@ -33,7 +33,7 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     if ((substring(output_dir, first = 1, last = 1)) == ".") {
       working_dir <- getwd()
       output_dir <- substr(output_dir, start = 2, stop = nchar(output_dir))
-      output_dir <- paste(working_dir, output_dir, "")
+      output_dir <- paste(working_dir, output_dir, sep="")
       dir.create(output_dir)
     } else if ((substring(output_dir, first = 1, last = 1)) == "~") {
       home_directory <- Sys.getenv("HOME")
@@ -48,7 +48,6 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     separator <- .get_system_path_separator()
     if (grepl(separator, annotation_file)) {
       worm_cat_annotations <- annotation_file
-      message(paste("Using external Annotation file: ", worm_cat_annotations))
     }else{
       # Get full path to annotations file
       worm_cat_annotations <- system.file("extdata", annotation_file, package="wormcat")
