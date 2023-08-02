@@ -17,16 +17,21 @@
 #' worm_cat_fun(file_to_process="/home/rstudio/examples/sams-1_up.csv",output_dir="./output",annotation_file=whole_genome_v2_nov-11-2021.csv,input_type="Wormbase.ID")
 worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="whole_genome_v2_nov-11-2021.csv", input_type="Sequence.ID", zip_files=TRUE) {
 
-    # Get the current working directory
-    working_dir <- getwd()
-
     # If output_dir is not given, create one using a timestamp
     if(is.null(output_dir)) {
       output_dir <- paste("worm-cat_", format(Sys.time(), "%b-%d-%Y-%H:%M:%S"), sep="")
     }
 
-    dir.create(file.path(working_dir, output_dir))
-
+    # Try to create the output directory do not error if it does not exists
+    if ((substring(output_dir, first = 1, last = 1)) == ".") {
+      working_dir <- getwd()
+      dir.create(file.path(working_dir, output_dir))
+    } else if ((substring(output_dir, first = 1, last = 1)) == "~") {
+      home_directory <- Sys.getenv("HOME")
+      dir.create(file.path(home_directory, output_dir))
+    } else {
+      dir.create(output_dir)
+    }
 
     # If annotation_file contains a file system specific separator assume an external annotation file is being used
     separator <- .get_system_path_separator()
