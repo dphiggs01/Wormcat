@@ -16,55 +16,55 @@
 #' @examples
 #' worm_cat_fun(file_to_process="WORMCAT/testdata/sams-1_up.csv",output_dir="~/wormcat_out",annotation_file="whole_genome_v2_nov-11-2021.csv",input_type="Wormbase.ID")
 #'
-worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="whole_genome_v2_nov-11-2021.csv", input_type="Sequence.ID", zip_files=TRUE) {
+worm_cat_fun <- function(file_to_process, title = "rgs", output_dir = NULL, rm_dir = FALSE, annotation_file = "whole_genome_v2_nov-11-2021.csv", input_type = "Sequence.ID", zip_files = TRUE) {
     # Check the input file for validity
 
     # Check special case for help documentation
     if (substr(file_to_process, 1, 7) == "WORMCAT") {
-      wormcat_package_path <- system.file(package="wormcat")
-      file_to_process <- gsub("WORMCAT", wormcat_package_path, file_to_process)
-      print(sprintf("WORMCAT substituted for %s",file_to_process))
+        wormcat_package_path <- system.file(package = "wormcat")
+        file_to_process <- gsub("WORMCAT", wormcat_package_path, file_to_process)
+        print(sprintf("WORMCAT substituted for %s", file_to_process))
     }
 
     if (!file.exists(file_to_process)) {
-       print(sprintf("The file %s cannot be found.",file_to_process))
-       print("EXITING!")
-       return()
+        print(sprintf("The file %s cannot be found.", file_to_process))
+        print("EXITING!")
+        return()
     }
 
     # If output_dir is not given, create one using a timestamp
-    if(is.null(output_dir)) {
-      output_dir <- paste("worm-cat_", format(Sys.time(), "%b-%d-%Y-%H:%M:%S"), sep="")
+    if (is.null(output_dir)) {
+        output_dir <- paste("worm-cat_", format(Sys.time(), "%b-%d-%Y-%H:%M:%S"), sep = "")
     }
 
     # Check if the output_dir directory exists
     if (dir.exists(output_dir)) {
-       # Check if the directory is empty
-       if (length(list.files(output_dir)) == 0) {
-          message(sprintf("The directory %s exists and is Empty.",output_dir))
-       } else {
-         print(sprintf("The directory %s is not Empty.",output_dir))
-         print("EXITING!")
-         return()
-       }
+        # Check if the directory is empty
+        if (length(list.files(output_dir)) == 0) {
+            message(sprintf("The directory %s exists and is Empty.", output_dir))
+        } else {
+            print(sprintf("The directory %s is not Empty.", output_dir))
+            print("EXITING!")
+            return()
+        }
     } else {
-      # Create the output directory
-      dir.create(output_dir, recursive = TRUE)
+        # Create the output directory
+        dir.create(output_dir, recursive = TRUE)
     }
 
     # If annotation_file contains a file system specific separator assume an external annotation file is being used
     separator <- .get_system_path_separator()
     if (grepl(separator, annotation_file)) {
-      worm_cat_annotations <- annotation_file
-    }else{
-      # Get full path to annotations file
-      worm_cat_annotations <- system.file("extdata", annotation_file, package="wormcat")
+        worm_cat_annotations <- annotation_file
+    } else {
+        # Get full path to annotations file
+        worm_cat_annotations <- system.file("extdata", annotation_file, package = "wormcat")
     }
 
     if (!file.exists(worm_cat_annotations)) {
-      print(sprintf("The annotation file %s cannot be found.",worm_cat_annotations))
-      print("EXITING!")
-      return()
+        print(sprintf("The annotation file %s cannot be found.", worm_cat_annotations))
+        print("EXITING!")
+        return()
     }
 
     # Create the categories file and save it to CSV output
@@ -75,55 +75,55 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     # For each of the three files created above:
     # 1. Parse the file only to include the entries with "acceptable p-values."
     # 2. Create bubble plots for each of the three categories based on the acceptable p-vlaues.
-    for(i in 1:3) {
-      rgs_fisher_cat_csv <- .create_file_nm(output_dir, "rgs_fisher_cat%d.csv", i)
-      .worm_cat_acceptable_pvalues(rgs_fisher_cat_csv)
+    for (i in 1:3) {
+        rgs_fisher_cat_csv <- .create_file_nm(output_dir, "rgs_fisher_cat%d.csv", i)
+        .worm_cat_acceptable_pvalues(rgs_fisher_cat_csv)
 
-      rgs_fisher_cat_apv_csv <- .create_file_nm(output_dir, "rgs_fisher_cat%d_apv.csv", i)
+        rgs_fisher_cat_apv_csv <- .create_file_nm(output_dir, "rgs_fisher_cat%d_apv.csv", i)
 
-      plot_title <- paste(title, sprintf("category%d",i), sep=":")
-      .worm_cat_bubble_plot(rgs_fisher_cat_apv_csv, plot_title)
+        plot_title <- paste(title, sprintf("category%d", i), sep = ":")
+        .worm_cat_bubble_plot(rgs_fisher_cat_apv_csv, plot_title)
     }
 
     # Capture basic information about this run write output to run_data.txt
     run_data <- .create_file_nm(output_dir, "run_data.txt")
-    runtime_l <- paste("runtime",format(Sys.time(), "%b-%d-%Y-%H:%M:%S"), sep=": ")
-    annotation_file_l <- paste("annotation_version",annotation_file, sep=": ")
-    input_type_l <- paste("input_type",input_type, sep=": ")
+    runtime_l <- paste("runtime", format(Sys.time(), "%b-%d-%Y-%H:%M:%S"), sep = ": ")
+    annotation_file_l <- paste("annotation_version", annotation_file, sep = ": ")
+    input_type_l <- paste("input_type", input_type, sep = ": ")
 
-    cat(runtime_l, annotation_file_l, input_type_l, file=run_data, sep="\n", append=TRUE)
+    cat(runtime_l, annotation_file_l, input_type_l, file = run_data, sep = "\n", append = TRUE)
 
     # Create a zip file as the final output
-    zip_ext=""
-    if(zip_files) {
+    zip_ext <- ""
+    if (zip_files) {
        files2zip <- dir(output_dir, full.names = TRUE)
        zip(zipfile = output_dir, files = files2zip)
-       zip_ext=".zip"
+       zip_ext <- ".zip"
     }
 
-    if(rm_dir & zip_files){
-       message("Cleaning up the working directory")
-       unlink(output_dir, TRUE)
+    if (rm_dir && zip_files) {
+        message("Cleaning up the working directory")
+        unlink(output_dir, TRUE)
     }
     print("Wormcat Execution completed!")
-    print(sprintf("Data is available %s%s",output_dir, zip_ext))
+    print(sprintf("Data is available %s%s", output_dir, zip_ext))
 }
 
 .get_system_path_separator <- function() {
-  separator <- file.path("dummy", "file")
-  # Extract the separator from the generated path
-  separator <- substr(separator, nchar("dummy") + 1, nchar(separator) - nchar("file"))
-  return(separator)
+    separator <- file.path("dummy", "file")
+    # Extract the separator from the generated path
+    separator <- substr(separator, nchar("dummy") + 1, nchar(separator) - nchar("file"))
+    return(separator)
 }
 
-.create_file_nm <- function(output_dir, name_format, n=0){
-  if(n==0){
-    file_nm = name_format
-  } else {
-    file_nm <- sprintf(name_format, n)
-  }
-  file_path <- file.path(output_dir, file_nm)
-  return(file_path)
+.create_file_nm <- function(output_dir, name_format, n = 0) {
+    if (n == 0) {
+        file_nm <- name_format
+    } else {
+        file_nm <- sprintf(name_format, n)
+    }
+    file_path <- file.path(output_dir, file_nm)
+    return(file_path)
 }
 
 
@@ -135,15 +135,12 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
 #' get_available_annotation_files()
 get_available_annotation_files <- function() {
 
-  # Get the path to the "extdata" directory within the wormcat package
-  extdata_dir <- system.file("extdata", package = "wormcat")
+    # Get the path to the "extdata" directory within the wormcat package
+    extdata_dir <- system.file("extdata", package = "wormcat")
 
-  # List all files in the "extdata" directory
-  files_in_extdata <- list.files(extdata_dir, full.names = TRUE)
-  annotation_files <- lapply(files_in_extdata, basename)
+    # List all files in the "extdata" directory
+    files_in_extdata <- list.files(extdata_dir, full.names = TRUE)
+    annotation_files <- lapply(files_in_extdata, basename)
 
-  return(annotation_files)
+    return(annotation_files)
 }
-
-
-
