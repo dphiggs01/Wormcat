@@ -40,10 +40,10 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     # Check if the output_dir directory exists
     if (dir.exists(output_dir)) {
        # Check if the directory is empty
-       if (length(list.files(directory_path)) == 0) {
-          message(sprintf("The directory %s exists and is Empty.",directory_path))
+       if (length(list.files(output_dir)) == 0) {
+          message(sprintf("The directory %s exists and is Empty.",output_dir))
        } else {
-         print(sprintf("The directory %s is not Empty.",directory_path))
+         print(sprintf("The directory %s is not Empty.",output_dir))
          print("EXITING!")
          return()
        }
