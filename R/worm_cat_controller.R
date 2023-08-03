@@ -29,19 +29,19 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
       output_dir <- paste("worm-cat_", format(Sys.time(), "%b-%d-%Y-%H:%M:%S"), sep="")
     }
 
-    # Create the output directory; do not error if it already exists.
-    if ((substring(output_dir, first = 1, last = 1)) == ".") {
-      working_dir <- getwd()
-      output_dir <- substr(output_dir, start = 2, stop = nchar(output_dir))
-      output_dir <- paste(working_dir, output_dir, sep="")
-      dir.create(output_dir)
-    } else if ((substring(output_dir, first = 1, last = 1)) == "~") {
-      home_directory <- Sys.getenv("HOME")
-      output_dir <- substr(output_dir, start = 2, stop = nchar(output_dir))
-      output_dir <- paste(home_directory, output_dir, sep="")
-      dir.create(output_dir)
+    # Check if the output_dir directory exists
+    if (dir.exists(output_dir)) {
+       # Check if the directory is empty
+       if (length(list.files(directory_path)) == 0) {
+          message(sprintf("The directory %s exists and is Empty.",directory_path))
+       } else {
+         print(sprintf("The directory %s is not Empty.",directory_path))
+         print("EXITING!")
+         return()
+       }
     } else {
-      dir.create(output_dir)
+      # Create the output directory
+      dir.create(output_dir, recursive = TRUE)
     }
 
     # If annotation_file contains a file system specific separator assume an external annotation file is being used
@@ -53,6 +53,11 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
       worm_cat_annotations <- system.file("extdata", annotation_file, package="wormcat")
     }
 
+    if (!file.exists(worm_cat_annotations)) {
+      print(sprintf("The annotation file %s cannot be found.",worm_cat_annotations))
+      print("EXITING!")
+      return()
+    }
 
     # Create the categories file and save it to CSV output
     .worm_cat_add_categories(file_to_process, output_dir, worm_cat_annotations, input_type)
@@ -63,23 +68,22 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     # 1. Parse the file only to include the entries with "acceptable p-values."
     # 2. Create bubble plots for each of the three categories based on the acceptable p-vlaues.
     for(i in 1:3) {
-      rgs_fisher_cat_csv <- sprintf("%s/rgs_fisher_cat%d.csv", output_dir, i)
-
+      rgs_fisher_cat_csv <- .create_file_nm(output_dir, "rgs_fisher_cat%d.csv", i)
       .worm_cat_acceptable_pvalues(rgs_fisher_cat_csv)
 
-      rgs_fisher_cat_apv_csv <- sprintf("%s/rgs_fisher_cat%d_apv.csv",output_dir, i)
+      rgs_fisher_cat_apv_csv <- .create_file_nm(output_dir, "rgs_fisher_cat%d_apv.csv", i)
 
       plot_title <- paste(title, sprintf("category%d",i), sep=":")
       .worm_cat_bubble_plot(rgs_fisher_cat_apv_csv, plot_title)
     }
 
     # Capture basic information about this run write output to run_data.txt
-    run_data <- sprintf("%s/run_data.txt", output_dir)
+    run_data <- .create_file_nm(output_dir, "run_data.txt")
     runtime_l <- paste("runtime",format(Sys.time(), "%b-%d-%Y-%H:%M:%S"), sep=": ")
     annotation_file_l <- paste("annotation_version",annotation_file, sep=": ")
     input_type_l <- paste("input_type",input_type, sep=": ")
 
-    cat(runtime_l, annotation_file_l, input_type_l, file=run_data,sep="\n",append=TRUE)
+    cat(runtime_l, annotation_file_l, input_type_l, file=run_data, sep="\n", append=TRUE)
 
     # Create a zip file as the final output
     if(zip_files) {
@@ -91,14 +95,24 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
        message("Cleaning up the working directory")
        unlink(output_dir, TRUE)
     }
+    print("Wormcat Execution completed!")
 }
 
 .get_system_path_separator <- function() {
-  if (Sys.info()["sysname"] == "Windows") {
-    return("\\")
+  separator <- file.path("dummy", "file")
+  # Extract the separator from the generated path
+  separator <- substr(separator, nchar("dummy") + 1, nchar(separator) - nchar("file"))
+  return(separator)
+}
+
+.create_file_nm <- function(output_dir, name_format, n=0){
+  if(n==0){
+    file_nm = name_format
   } else {
-    return("/")
+    file_nm <- sprintf(name_format, n)
   }
+  file_path <- file.path(output_dir, file_nm)
+  return(file_path)
 }
 
 

@@ -12,16 +12,19 @@
     file_to_process_df <- data.frame(unique(file_to_process))
 
     # Remove duplicates from annotations (there really should not be any)
+    # But we have found some custom Annotation files have duplicates
     annotations_df <- annotations[!duplicated(annotations[,input_type]), ]
 
     # Remove other columns from annotations (there really should not be any)
+    # But we have found some custom Annotation files have additional columns
     annotations_df <- annotations_df[c(1,2,3,4,5,6)]
 
     # Combine the file_to_process with the annotation file
-    rgs_merge <-  merge(file_to_process_df, annotations_df, by = input_type, all.x = TRUE)
+    rgs_merge <- merge(file_to_process_df, annotations_df, by = input_type, all.x = TRUE)
 
     # Save merged data as CSV file
-    write.csv(rgs_merge, file = paste(out_dir,"/rgs_and_categories.csv", sep=""))
+    rgs_and_categories <- file.path(out_dir, "rgs_and_categories.csv")
+    write.csv(rgs_merge, file = rgs_and_categories)
 
 }
 

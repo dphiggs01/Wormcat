@@ -10,11 +10,11 @@ library("plyr")
 
 .worm_cat_fisher_test <- function(output_dir, annotations_csv){
   # Read in annotations file
-  annotations <- read.csv(annotations_csv,header = TRUE, sep = ",")
+  annotations <- read.csv(annotations_csv, header = TRUE, sep = ",")
 
   # Read in rgs mapped to annotations
-  rgs_and_categories_csv <- paste(output_dir,"rgs_and_categories.csv", sep="/")
-  regulated_gene_set <- read.csv(rgs_and_categories_csv,header = TRUE, sep = ",")
+  rgs_and_categories_csv <- file.path(output_dir, "rgs_and_categories.csv")
+  regulated_gene_set <- read.csv(rgs_and_categories_csv, header = TRUE, sep = ",")
 
   # Step 1 Count categories in annotation files *AC*, will stay static
 
@@ -32,14 +32,14 @@ library("plyr")
   rgs_annotated_cat2 <- data.frame(table(regulated_gene_set$Category.2))
   rgs_annotated_cat3 <- data.frame(table(regulated_gene_set$Category.3))
 
-  .merger_cats(rgs_annotated_cat1, annotated_cat1, total_annotations_count$nrow, total_rgs_count$nrow, .out_file_nm(output_dir,1))
-  .merger_cats(rgs_annotated_cat2, annotated_cat2, total_annotations_count$nrow, total_rgs_count$nrow, .out_file_nm(output_dir,2))
-  .merger_cats(rgs_annotated_cat3, annotated_cat3, total_annotations_count$nrow, total_rgs_count$nrow, .out_file_nm(output_dir,3))
+  .merger_cats(rgs_annotated_cat1, annotated_cat1, total_annotations_count$nrow, total_rgs_count$nrow, output_dir, 1)
+  .merger_cats(rgs_annotated_cat2, annotated_cat2, total_annotations_count$nrow, total_rgs_count$nrow, output_dir, 2)
+  .merger_cats(rgs_annotated_cat3, annotated_cat3, total_annotations_count$nrow, total_rgs_count$nrow, output_dir, 3)
 }
 
 ###########################
 # Step 4: Merge data frames
-.merger_cats <- function(rgs_annotated_cat, annotated_cat, total_annotations_count, total_rgs_count, file_nm) {
+.merger_cats <- function(rgs_annotated_cat, annotated_cat, total_annotations_count, total_rgs_count, output_dir, n) {
 
   merged_cats <- merge(rgs_annotated_cat, annotated_cat, by = "Var1", all.x = TRUE)
 
@@ -76,12 +76,10 @@ library("plyr")
   }
 
   sorted_df <- df[with(df, order(PValue)),]
+  file_nm <- .create_file_nm(output_dir, "rgs_fisher_cat%d.csv", n)
   write.csv(sorted_df, file = file_nm)
 }
 
-.out_file_nm <- function(output_dir,n){
-  sprintf("%s/rgs_fisher_cat%d.csv",output_dir, n)
-}
 
 
 
