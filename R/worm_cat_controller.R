@@ -101,7 +101,7 @@ worm_cat_fun <- function(file_to_process, title = "rgs", output_dir = NULL, rm_d
        zip_ext <- ".zip"
     }
 
-    if (rm_dir && zip_files) {
+    if (rm_dir & zip_files) {
         message("Cleaning up the working directory")
         unlink(output_dir, TRUE)
     }
