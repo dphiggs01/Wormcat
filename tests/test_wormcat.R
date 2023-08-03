@@ -17,7 +17,7 @@ setup_test <- function(){
   print(getwd())
   project_dir <- "/Users/dan/Code/R_Workspace/Wormcat"
   message(sprintf("The Wormcat project directory is: %s\n",project_dir))
-  setwd(sprintf("%s/test",project_dir))
+  setwd(sprintf("%s/tests",project_dir))
 }
 
 
@@ -29,9 +29,9 @@ test_that("get_available_annotation_files expect filenames are equal", {
 
 test_that("worm_cat_fun smoke test", {
   setup_test()
-  file_to_process <- "./sams-1_up.csv"
+  file_to_process <- "WORMCAT/testdata/sams-1_up.csv"
   title <- "sams-1 up"
-  output_dir <- "./wormcat_out" # This will create a directory at the current location
+  output_dir <- "~/wormcat_out"
   rm_dir = FALSE
   annotation_file <-"whole_genome_v2_nov-11-2021.csv"
   input_type <- "Wormbase.ID"

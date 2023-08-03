@@ -14,10 +14,18 @@
 #' @param zip_files A flag to create a zip file of the final content. The default is \code{TRUE}.
 #' @export
 #' @examples
-#' worm_cat_fun(file_to_process="/home/rstudio/examples/sams-1_up.csv",output_dir="./output",annotation_file="whole_genome_v2_nov-11-2021.csv",input_type="Wormbase.ID")
+#' worm_cat_fun(file_to_process="WORMCAT/testdata/sams-1_up.csv",output_dir="~/wormcat_out",annotation_file="whole_genome_v2_nov-11-2021.csv",input_type="Wormbase.ID")
 #'
 worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=FALSE, annotation_file="whole_genome_v2_nov-11-2021.csv", input_type="Sequence.ID", zip_files=TRUE) {
     # Check the input file for validity
+
+    # Check special case for help documentation
+    if (substr(file_to_process, 1, 7) == "WORMCAT") {
+      wormcat_package_path <- system.file(package="wormcat")
+      file_to_process <- gsub("WORMCAT", wormcat_package_path, file_to_process)
+      print(sprintf("WORMCAT substituted for %s",file_to_process))
+    }
+
     if (!file.exists(file_to_process)) {
        print(sprintf("The file %s cannot be found.",file_to_process))
        print("EXITING!")
@@ -86,16 +94,19 @@ worm_cat_fun <- function(file_to_process, title="rgs", output_dir=NULL, rm_dir=F
     cat(runtime_l, annotation_file_l, input_type_l, file=run_data, sep="\n", append=TRUE)
 
     # Create a zip file as the final output
+    zip_ext=""
     if(zip_files) {
        files2zip <- dir(output_dir, full.names = TRUE)
        zip(zipfile = output_dir, files = files2zip)
+       zip_ext=".zip"
     }
 
-    if(rm_dir == TRUE){
+    if(rm_dir & zip_files){
        message("Cleaning up the working directory")
        unlink(output_dir, TRUE)
     }
     print("Wormcat Execution completed!")
+    print(sprintf("Data is available %s%s",output_dir, zip_ext))
 }
 
 .get_system_path_separator <- function() {

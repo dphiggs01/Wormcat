@@ -36,6 +36,6 @@ worm_cat_fun uses a concise list of nested categories defined in the annotation_
  The tool also provides csv files containing input gene annotations, P-values from Fisher’s exact tests, and Bonferroni multiple hypothesis testing corrections.
 }
 \examples{
-worm_cat_fun(file_to_process="/home/rstudio/examples/sams-1_up.csv",output_dir="./output",annotation_file="whole_genome_v2_nov-11-2021.csv",input_type="Wormbase.ID")
+worm_cat_fun(file_to_process="WORMCAT/testdata/sams-1_up.csv",output_dir="~/wormcat_out",annotation_file="whole_genome_v2_nov-11-2021.csv",input_type="Wormbase.ID")
 
 }
