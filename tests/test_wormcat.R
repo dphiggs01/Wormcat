@@ -23,6 +23,7 @@ setup_test <- function() {
 
 test_that("get_available_annotation_files expect filenames are equal", {
     annotation_files <- get_available_annotation_files()
+    print(annotation_files)
     expect_contains(annotation_files, "whole_genome_v2_nov-11-2021.csv")
 })
 

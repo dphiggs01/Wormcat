@@ -140,7 +140,8 @@ get_available_annotation_files <- function() {
 
     # List all files in the "extdata" directory
     files_in_extdata <- list.files(extdata_dir, full.names = TRUE)
-    annotation_files <- lapply(files_in_extdata, basename)
+    annotation_files <- basename(files_in_extdata)
 
     return(annotation_files)
 }
+
