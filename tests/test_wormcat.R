@@ -1,9 +1,10 @@
 library(testthat)
-source("../R/worm_cat_controller.R")
-source("../R/worm_cat_add_categories.R")
-source("../R/worm_cat_fisher_test.R")
-source("../R/worm_cat_acceptable_pvalues.R")
-source("../R/worm_cat_bubble_plot.R")
+# source("../R/worm_cat_controller.R")
+# source("../R/worm_cat_add_categories.R")
+# source("../R/worm_cat_fisher_test.R")
+# source("../R/worm_cat_acceptable_pvalues.R")
+# source("../R/worm_cat_bubble_plot.R")
+
 
 # Utility function to delete the directory if it exists
 delete_directory_if_exists <- function(directory_path) {
@@ -13,31 +14,25 @@ delete_directory_if_exists <- function(directory_path) {
     }
 }
 
-setup_test <- function() {
-    print(getwd())
-    project_dir <- "/Users/dan/Code/R_Workspace/Wormcat"
-    message(sprintf("The Wormcat project directory is: %s\n", project_dir))
-    setwd(sprintf("%s/tests", project_dir))
-}
 
 
 test_that("get_available_annotation_files expect filenames are equal", {
     annotation_files <- get_available_annotation_files()
-    print(annotation_files)
+    #cat(annotation_files)
     expect_contains(annotation_files, "whole_genome_v2_nov-11-2021.csv")
 })
 
 
 test_that("worm_cat_fun smoke test", {
-    setup_test()
-    file_to_process <- "WORMCAT/testdata/sams-1_up.csv"
+    testdata_dir <- system.file("testdata", package = "wormcat")
+    file_to_process <- file.path(testdata_dir, "sams-1_up.csv")
     title <- "sams-1 up"
     output_dir <- "~/wormcat_out"
     rm_dir <- FALSE
     annotation_file <- "whole_genome_v2_nov-11-2021.csv"
     input_type <- "Wormbase.ID"
     zip_files <- FALSE
-    succeed()
+
 
     tryCatch({
         # Delete the output directory if it exists

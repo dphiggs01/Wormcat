@@ -25,7 +25,7 @@ Wormcat is also available as an online tool at [www.wormcat.com](http://www.worm
 
 If you choose to install Wormcat locally, please follow the below instructions:
 
-* Wormcat requires **R 3.5.1** or greater and can be downloaded from [here](https://www.r-project.org/)
+* Wormcat requires **R 4.1.0** or greater and can be downloaded from [here](https://www.r-project.org/)
 
 * **devtools** package is also required for installation of Wormcat. You can install devtools package from RStudio or the R commandline with the following command. `install.packages("devtools")`
 
@@ -40,20 +40,23 @@ If you choose to install Wormcat locally, please follow the below instructions:
 
 Condensed instructions:
 
-```
-    install.packages("devtools")
-    library("devtools")
-    install_github("trinker/plotflow")
-    install_github("dphiggs01/wormcat")
-    install.packages("argparse")
-    library(wormcat)
+```bash
+R -e "install.packages(c('devtools'))"
+R -e "install.packages(c('plyr','data.table','pander','ggthemes','ggplot2','scales','argparse','svglite'))"
+R -e "install.packages(c('BiocManager'))"
+
+R -e "library(BiocManager); BiocManager::install(c('FSA'))"
+R -e "library('devtools'); install_github('trinker/plotflow')"
+R -e "library('devtools'); install_github('dphiggs01/wormcat')"
 ```
 
 
 Note: for (Linux) Ubuntu source code install 
 
-* `sudo apt-get install libxml2-dev libssl-dev libcurl4-openssl-dev libfontconfig1-dev libcairo2-dev`
+```bash
+apt-get update -q
+apt-get install -y --no-install-recommends libxml2-dev libssl-dev libcurl4-openssl-dev libfontconfig1-dev libcairo2-dev libicu-dev libz-dev unzip zip liblzma-dev libbz2-dev libglpk-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev libgit2-dev cmake
+```
 
-* Follow this link to [upgrade R on Ubuntu 18.0.4](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-18-04-quickstart).
 
 
