@@ -1,5 +1,5 @@
-library(FSA)
-
+#library(FSA)
+library("stats")
 .worm_cat_acceptable_pvalues <- function(rgs_fisher_cat_csv) {
 
     rgs_fisher_cat  <- read.csv(rgs_fisher_cat_csv, row.names = 1, header = TRUE, sep = ",")

@@ -5,8 +5,9 @@
 # Step 4: Build contingency table for each category in RGS vs AC, use a for loop to build the contingency tables.
 # Step 5: Use Fisher.test to generate P value for enrichment of specific categories in RGS
 
-library("data.table")
+#library("data.table")
 library("plyr")
+library("stats")
 
 .worm_cat_fisher_test <- function(output_dir, annotations_csv) {
     # Read in annotations file

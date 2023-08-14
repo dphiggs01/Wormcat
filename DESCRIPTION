@@ -1,11 +1,11 @@
 Package: wormcat
 Title: Worm Gene Annotation Identifier
 Version: 1.0.9
-Authors@R: c( person("Dan", "Higgins", email = "daniel.higgins@gatech,edu", role = c("aut", "cre")),
+Authors@R: c( person("Dan", "Higgins", email = "daniel.higgins@gatech.edu", role = c("aut", "cre")),
               person("Amy", "Walker", email = "amy.walker@umassmed.edu"))
 Maintainer: Dan Higgins <daniel.higgins@gatech.edu>
 Description: This package maps a C. elegans gene set to annotated categories returning significant categories as a csv file and bubble chart.
-Depends: R (>= 3.4.1), plotflow, ggplot2, ggthemes, FSA, svglite
+Depends: R (>= 3.4.1), ggplot2, ggthemes, plyr, stats
 License: MIT
 Encoding: UTF-8
 LazyData: true
