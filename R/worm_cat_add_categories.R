@@ -3,10 +3,10 @@
 .worm_cat_add_categories <- function(file_to_process, out_dir, worm_cat_annotations, input_type) {
 
     # Read in the file to process
-    file_to_process  <- read.csv(file_to_process, header = TRUE, sep = ",")
+    file_to_process  <- utils::read.csv(file_to_process, header = TRUE, sep = ",")
 
     # Read in the annotation file
-    annotations  <- read.csv(worm_cat_annotations, header = TRUE, sep = ",")
+    annotations  <- utils::read.csv(worm_cat_annotations, header = TRUE, sep = ",")
 
     # Remove duplicates from file_to_process
     file_to_process_df <- data.frame(unique(file_to_process))
@@ -24,5 +24,5 @@
 
     # Save merged data as CSV file
     rgs_and_categories <- file.path(out_dir, "rgs_and_categories.csv")
-    write.csv(rgs_merge, file = rgs_and_categories)
+    utils::write.csv(rgs_merge, file = rgs_and_categories)
 }

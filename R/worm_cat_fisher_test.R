@@ -6,16 +6,18 @@
 # Step 5: Use Fisher.test to generate P value for enrichment of specific categories in RGS
 
 #library("data.table")
+#' @import plyr
+#' @import stats
 library("plyr")
 library("stats")
 
 .worm_cat_fisher_test <- function(output_dir, annotations_csv) {
     # Read in annotations file
-    annotations <- read.csv(annotations_csv, header = TRUE, sep = ",")
+    annotations <- utils::read.csv(annotations_csv, header = TRUE, sep = ",")
 
     # Read in rgs mapped to annotations
     rgs_and_categories_csv <- file.path(output_dir, "rgs_and_categories.csv")
-    regulated_gene_set <- read.csv(rgs_and_categories_csv, header = TRUE, sep = ",")
+    regulated_gene_set <- utils::read.csv(rgs_and_categories_csv, header = TRUE, sep = ",")
 
     # Step 1 Count categories in annotation files *AC*, will stay static
 
@@ -78,5 +80,5 @@ library("stats")
 
     sorted_df <- df[with(df, order(PValue)), ]
     file_nm <- .create_file_nm(output_dir, "rgs_fisher_cat%d.csv", n)
-    write.csv(sorted_df, file = file_nm)
+    utils::write.csv(sorted_df, file = file_nm)
 }

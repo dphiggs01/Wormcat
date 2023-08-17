@@ -5,7 +5,7 @@
 # source("../R/worm_cat_fisher_test.R")
 # source("../R/worm_cat_acceptable_pvalues.R")
 # source("../R/worm_cat_bubble_plot.R")
-#library(wormcat)
+library(wormcat)
 
 # Utility function to delete the directory if it exists
 delete_directory_if_exists <- function(directory_path) {
@@ -20,7 +20,8 @@ file_to_process <- "/Users/dan/Downloads/sams-1_up.csv"
 title <- "sams-1 up"
 output_dir <- "~/wormcat_out"
 rm_dir <- FALSE
-annotation_file <- "whole_genome_v2_nov-11-2021.csv"
+#annotation_file <- "whole_genome_v2_nov-11-2021.csv"
+annotation_file <- "https://dphiggs01.github.io/Wormcat_data/data/whole_genome_v2_nov-11-2021.csv"
 input_type <- "Wormbase.ID"
 zip_files <- FALSE
 
@@ -38,3 +39,13 @@ worm_cat_fun(file_to_process,
              zip_files)
 
 
+# Call the function to read and process CSV data
+result <- get_remote_annotation_file_names()
+
+# Print the list of tuples
+for (tuple in result) {
+  cat(tuple[[1]], " : ", tuple[[2]], "\n")
+}
+
+# Call the function to copy the Annotation files to the local file system
+copy_annotation_files_to_extdata()

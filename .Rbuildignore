@@ -1,2 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^.*\.vscode
+^doc$
+^tests/my_linter.R$
+^tests/test_wormcat.R$
+

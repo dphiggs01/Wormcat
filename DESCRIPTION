@@ -1,12 +1,16 @@
+Type: Package
 Package: wormcat
 Title: Worm Gene Annotation Identifier
 Version: 1.0.9
 Authors@R: c( person("Dan", "Higgins", email = "daniel.higgins@gatech.edu", role = c("aut", "cre")),
-              person("Amy", "Walker", email = "amy.walker@umassmed.edu"))
+              person("Amy", "Walker", email = "amy.walker@umassmed.edu", role = c("ctb")))
 Maintainer: Dan Higgins <daniel.higgins@gatech.edu>
-Description: This package maps a C. elegans gene set to annotated categories returning significant categories as a csv file and bubble chart.
+Description: A utility for analyzing gene sets, associating them with annotated categories, defined 
+             by a fisher exact test and generating significant categories as both a text file and bubble charts.
 Depends: R (>= 3.4.1), ggplot2, ggthemes, plyr, stats, svglite
-License: MIT
+License: MIT + file LICENSE
+URL: https://github.com/dphiggs01/Wormcat
+Language: en-US
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3

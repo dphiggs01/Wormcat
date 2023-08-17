@@ -14,8 +14,11 @@
 #' @param zip_files A flag to create a zip file of the final content. The default is \code{TRUE}.
 #' @export
 #' @examples
-#' worm_cat_fun(file_to_process="WORMCAT/testdata/sams-1_up.csv",output_dir="~/wormcat_out",annotation_file="whole_genome_v2_nov-11-2021.csv",input_type="Wormbase.ID")
+#' worm_cat_fun(file_to_process="WORMCAT/testdata/sams-1_up.csv", output_dir="~/wormcat_out",
+#'              annotation_file="whole_genome_v2_nov-11-2021.csv", input_type="Wormbase.ID")
 #'
+#'
+
 worm_cat_fun <- function(file_to_process, title = "rgs", output_dir = NULL, rm_dir = FALSE, annotation_file = "whole_genome_v2_nov-11-2021.csv", input_type = "Sequence.ID", zip_files = TRUE) {
     # Check the input file for validity
 
@@ -52,20 +55,28 @@ worm_cat_fun <- function(file_to_process, title = "rgs", output_dir = NULL, rm_d
         dir.create(output_dir, recursive = TRUE)
     }
 
-    # If annotation_file contains a file system specific separator assume an external annotation file is being used
-    separator <- .get_system_path_separator()
-    if (grepl(separator, annotation_file)) {
-        worm_cat_annotations <- annotation_file
+
+    # If annotation_file starts with HTTP assume we have a URL
+    if (grepl("^http:|^https:", tolower(annotation_file))) {
+      worm_cat_annotations <- annotation_file
     } else {
-        # Get full path to annotations file
-        worm_cat_annotations <- system.file("extdata", annotation_file, package = "wormcat")
+        separator <- .get_system_path_separator()
+        # If annotation_file contains a file system specific separator assume an external annotation file is being used
+        if (grepl(separator, annotation_file)) {
+            worm_cat_annotations <- annotation_file
+        } else {
+            # Get full path to annotations file
+            worm_cat_annotations <- system.file("extdata", annotation_file, package = "wormcat")
+        }
+
+        if (!file.exists(worm_cat_annotations)) {
+          print(sprintf("The annotation file %s cannot be found.", worm_cat_annotations))
+          print("EXITING!")
+          return()
+        }
+
     }
 
-    if (!file.exists(worm_cat_annotations)) {
-        print(sprintf("The annotation file %s cannot be found.", worm_cat_annotations))
-        print("EXITING!")
-        return()
-    }
 
     # Create the categories file and save it to CSV output
     .worm_cat_add_categories(file_to_process, output_dir, worm_cat_annotations, input_type)
@@ -97,7 +108,7 @@ worm_cat_fun <- function(file_to_process, title = "rgs", output_dir = NULL, rm_d
     zip_ext <- ""
     if (zip_files) {
        files2zip <- dir(output_dir, full.names = TRUE)
-       zip(zipfile = output_dir, files = files2zip)
+       utils::zip(zipfile = output_dir, files = files2zip)
        zip_ext <- ".zip"
     }
 
@@ -127,13 +138,13 @@ worm_cat_fun <- function(file_to_process, title = "rgs", output_dir = NULL, rm_d
 }
 
 
-#' Worm Cat Function
+#' List Local Annotation Files
 #'
-#' This function returns a list of available curated annotation file names for use with worm_cat_fun.
+#' This function returns a list of locally available curated annotation file names for use with worm_cat_fun.
 #' @export
 #' @examples
-#' get_available_annotation_files()
-get_available_annotation_files <- function() {
+#' get_local_annotation_file_names()
+get_local_annotation_file_names <- function() {
 
     # Get the path to the "extdata" directory within the wormcat package
     extdata_dir <- system.file("extdata", package = "wormcat")
@@ -143,5 +154,63 @@ get_available_annotation_files <- function() {
     annotation_files <- basename(files_in_extdata)
 
     return(annotation_files)
+}
+
+
+#' List Remote Annotation Files
+#'
+#' This function returns a list of remotely available curated annotation file names for use with worm_cat_fun.
+#' @export
+#' @examples
+#' get_remote_annotation_file_names()
+get_remote_annotation_file_names <- function() {
+  # URL of the CSV data
+  base_url <- "https://dphiggs01.github.io/Wormcat_data/"
+  annotation_list_url <- paste0(base_url, "annotation_list.csv")
+
+    # Read CSV data from the URL
+  data <- utils::read.csv(annotation_list_url, stringsAsFactors = FALSE)
+
+  # Sort the data by the "order" column
+  sorted_data <- data[order(data$order), ]
+
+  # Create a list of tuples
+  tuples_list <- lapply(1:nrow(sorted_data), function(i) {
+    short_desc <- sorted_data$short_desc[i]
+    file_name <- paste0(base_url, sorted_data$location_suffix[i], "/", sorted_data$file_name[i])
+    return(list(short_desc, file_name))
+  })
+
+  return(tuples_list)
+}
+
+
+#' Copy Remote Annotation Files to Local file system
+#'
+#' This function copies a list of remotely available curated annotation files to the
+#' local files system for use with worm_cat_fun.
+#' @export
+copy_annotation_files_to_extdata <- function() {
+  # Call the function to get the list of tuples
+  annotation_files <- get_remote_annotation_file_names()
+
+  # Directory to copy the files to
+  extdata_dir <- system.file("extdata", package = "wormcat")
+
+  # Process and copy files
+  for (tuple in annotation_files) {
+    short_desc <- tuple[[1]]
+    file_url <- tuple[[2]]
+
+    file_name <- gsub("^.*/", "", file_url)
+    dest_file <- file.path(extdata_dir, file_name)
+
+    if (!file.exists(dest_file)) {
+      download.file(file_url, dest_file)
+      cat("Copied:", file_name, "\n")
+    } else {
+      message(sprintf("Skipped (already exists): %s", file_name))
+    }
+  }
 }
 
