@@ -206,7 +206,7 @@ copy_annotation_files_to_extdata <- function() {
     dest_file <- file.path(extdata_dir, file_name)
 
     if (!file.exists(dest_file)) {
-      download.file(file_url, dest_file)
+      utils::download.file(file_url, dest_file)
       cat("Copied:", file_name, "\n")
     } else {
       message(sprintf("Skipped (already exists): %s", file_name))
