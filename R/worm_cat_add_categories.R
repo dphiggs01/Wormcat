@@ -1,6 +1,10 @@
 # Merge the annotation file with the file to process
 
 .worm_cat_add_categories <- function(file_to_process, out_dir, worm_cat_annotations, input_type) {
+    #log_file <- file("/Users/dan/delme/log.txt", open = "a")
+    #message_to_log <- sprintf("Calling .worm_cat_add_categories input_type[%s]",input_type)
+    #cat(message_to_log, "\n", file = log_file)
+    #close(log_file)
 
     # Read in the file to process
     file_to_process  <- utils::read.csv(file_to_process, header = TRUE, sep = ",")
@@ -8,8 +12,13 @@
     # Read in the annotation file
     annotations  <- utils::read.csv(worm_cat_annotations, header = TRUE, sep = ",")
 
+    # Keep only the first column
+    first_column <- file_to_process[, 1]
+    file_to_process_df <- data.frame(FirstColumn = first_column)
+    colnames(file_to_process_df)[1] <- input_type
+
     # Remove duplicates from file_to_process
-    file_to_process_df <- data.frame(unique(file_to_process))
+    file_to_process_df <- data.frame(unique(file_to_process_df))
 
     # Remove duplicates from annotations (there really should not be any)
     # But we have found some custom Annotation files have duplicates

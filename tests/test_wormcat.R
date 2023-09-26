@@ -1,4 +1,5 @@
 library(testthat)
+library(wormcat)
 # source("../R/worm_cat_controller.R")
 # source("../R/worm_cat_add_categories.R")
 # source("../R/worm_cat_fisher_test.R")
@@ -16,8 +17,8 @@ delete_directory_if_exists <- function(directory_path) {
 
 
 
-test_that("get_available_annotation_files expect filenames are equal", {
-    annotation_files <- get_available_annotation_files()
+test_that("get_local_annotation_file_names expect filenames are equal", {
+    annotation_files <- get_local_annotation_file_names()
     #cat(annotation_files)
     expect_contains(annotation_files, "whole_genome_v2_nov-11-2021.csv")
 })
@@ -26,6 +27,8 @@ test_that("get_available_annotation_files expect filenames are equal", {
 test_that("worm_cat_fun smoke test", {
     testdata_dir <- system.file("testdata", package = "wormcat")
     file_to_process <- file.path(testdata_dir, "sams-1_up.csv")
+    #file_to_process <- file.path(testdata_dir, "unc-17_up.csv")
+    cat(file_to_process, "\n")
     title <- "sams-1 up"
     output_dir <- "~/wormcat_out"
     rm_dir <- FALSE
@@ -52,7 +55,7 @@ test_that("worm_cat_fun smoke test", {
         succeed()
     }, error = function(err) {
         message("Error:", conditionMessage(err))
-        cat("Error:", conditionMessage(err), "/n")
+        cat("Error:", conditionMessage(err), "\n")
         fail()
     })
 })
