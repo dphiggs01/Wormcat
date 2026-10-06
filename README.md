@@ -1,3 +1,11 @@
+# ATTENTION: We are no longer maintaining this codebase
+
+A new version of WormCat can be found at:
+
+[WormCat3](https://github.com/DanHUMassMed/wormcat3)
+
+-----
+
 # Analysis of genome-scale data with WormCat identifies novel enriched gene categories in studies from metabolic, tissue-specific, and lifespan-drug data
 
 #### Authors: Amy Holdorf, Daniel Higgins, Anne Hart, Peter Boag, Gregory Pazour, Marian Walhout,and Amy Walker
